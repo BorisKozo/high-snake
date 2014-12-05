@@ -140,7 +140,7 @@ function startGame() {
         series: [
           {
             name: 'Snake',
-            data: [[boardSize / 2 - 2, boardSize / 2], [boardSize / 2 - 1, boardSize / 2],[boardSize / 2, boardSize / 2]]
+            data: [[1, boardSize / 2], [2, boardSize / 2], [3, boardSize / 2]]
           },
           {
             name: 'Apple',
@@ -192,6 +192,7 @@ function startGame() {
         moveSnake(snakeSeries, nextDirection, enlargeSnake);
         if (!verifySnake(snakeSeries)) {
           gameOver = true;
+          chart.showLoading();
         }
         enlargeSnake = false;
         if (verifyApple(appleSeries, snakeSeries)) {
@@ -211,5 +212,10 @@ function startGame() {
     };
   }
 
+  Highcharts.setOptions({
+    lang: {
+      loading: 'Game Over! Refresh the browser to start again.'
+    }
+  })
   jaws.start(MyGameState);
 }
