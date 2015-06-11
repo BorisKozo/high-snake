@@ -1,7 +1,7 @@
 High-Snake
 ==========
 
-[Play High Snake](boriskozo.github.io/high-snake/)
+[Play High Snake](http://boriskozo.github.io/high-snake/)
 
 A snake game that uses [HighCharts](https://github.com/highslide-software/highcharts.com/) as its rendering engine.
 
