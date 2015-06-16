@@ -827,6 +827,9 @@ function resetPressedKeys(e) {
  */
 function handleKeyUp(e) {
   event = (e) ? e : window.event
+  if (keycode_to_string[event.keyCode] === undefined) {
+    return;
+  }
   var human_names = keycode_to_string[event.keyCode].split(" ")
   human_names.forEach( function(human_name) {
    pressed_keys[human_name] = false

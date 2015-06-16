@@ -9,6 +9,7 @@ function startGame() {
   var boardSize = 20;
   var gameOver = false;
   var enlargeSnake = false;
+  var isApplePresent = false;
 
   var direction = 'right';
   var nextDirection = direction;
@@ -71,14 +72,15 @@ function startGame() {
 
 
   function createApple(apple, snake) {
-    if (apple.data.length > 0) {
+    if (isApplePresent || apple.data.length > 0) {
       return;
     }
-    while (true) {
+    while (apple.data.length === 0) {
       var x = getRandomInt(0, boardSize + 1);
       var y = getRandomInt(0, boardSize + 1);
       if (!inSnake({ x: x, y: y }, snake)) {
         apple.addPoint([x, y]);
+        isApplePresent = true;
         return;
       }
     }
@@ -188,7 +190,7 @@ function startGame() {
       createApple(appleSeries, snakeSeries);
       deltaSpeed -= jaws.game_loop.tick_duration;
       if (deltaSpeed <= 0) {
-        deltaSpeed = speed;
+        deltaSpeed = Math.max(speed,100);
         moveSnake(snakeSeries, nextDirection, enlargeSnake);
         if (!verifySnake(snakeSeries)) {
           gameOver = true;
@@ -197,9 +199,11 @@ function startGame() {
         enlargeSnake = false;
         if (verifyApple(appleSeries, snakeSeries)) {
           score++;
+          speed--;
           scoreSeries.update({ name: 'Score: ' + score })
           appleSeries.setData([], false);
           enlargeSnake = true;
+          isApplePresent = false;
         }
         direction = nextDirection;
       }
